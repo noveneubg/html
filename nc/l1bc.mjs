@@ -5569,17 +5569,17 @@ var l1bc = function() {
     510: "Not Extended",
     511: "Network Authentication Required"
   };
-  const copyright_notice = `l1bc.js is licensed under the GNU LGPL v3. You can find the license text and source code at the project's git repository: https://github.com/ading2210/l1bc.js
+  const copyright_notice = `libcurl.js is licensed under the GNU LGPL v3. You can find the license text and source code at the project's git repository: https://github.com/ading2210/libcurl.js
 
 Several C libraries are used, and their licenses are listed below:
-- l1bc: curl License (https://curl.se/docs/copyright.html)
+- libcurl: curl License (https://curl.se/docs/copyright.html)
 - mbedtls: Apache License 2.0 (https://github.com/Mbed-TLS/mbedtls/blob/development/LICENSE)
 - cjson: MIT License (https://github.com/DaveGamble/cJSON/blob/master/LICENSE)
 - zlib: zlib License (https://www.zlib.net/zlib_license.html)
 - brotli: MIT License (https://github.com/google/brotli/blob/master/LICENSE)
 - nghttp2: MIT License (https://github.com/nghttp2/nghttp2/blob/master/COPYING)
 `;
-  class CurlSession {
+  class L1bcSession {
     constructor(options = {}) {
       check_loaded(true);
       this.options = options;
@@ -5748,7 +5748,7 @@ Several C libraries are used, and their licenses are listed below:
       });
     }
   }
-  class HTTPSession extends CurlSession {
+  class HTTPSession extends L1bcSession {
     constructor(options = {}) {
       super();
       this.options = options;
@@ -5915,7 +5915,7 @@ Several C libraries are used, and their licenses are listed below:
       return body;
     }
   }
-  class CurlWebSocket extends CurlSession {
+  class L1bcWebSocket extends L1bcSession {
     constructor(url, protocols = [], options = {}) {
       if (!url.startsWith("wss://") && !url.startsWith("ws://")) {
         throw new SyntaxError("invalid url");
@@ -6079,7 +6079,7 @@ Several C libraries are used, and their licenses are listed below:
       this.connect();
     }
     connect() {
-      this.socket = new CurlWebSocket(this.url, this.protocols, this.options);
+      this.socket = new L1bcWebSocket(this.url, this.protocols, this.options);
       this.socket.onopen = () => {
         this.status = this.OPEN;
         let open_event = new Event("open");
@@ -6159,7 +6159,7 @@ Several C libraries are used, and their licenses are listed below:
       return "";
     }
   }
-  class TLSSocket extends CurlSession {
+  class TLSSocket extends L1bcSession {
     constructor(hostname, port, options = {}) {
       super();
       this.hostname = hostname;
@@ -6348,7 +6348,7 @@ Several C libraries are used, and their licenses are listed below:
     },
     transport: "wisp",
     WebSocket: FakeWebSocket,
-    CurlWebSocket,
+    L1bcWebSocket,
     TLSSocket,
     HTTPSession,
     fetch() {
